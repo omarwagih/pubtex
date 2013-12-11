@@ -3,52 +3,6 @@
 @main("pub[tex]") {
 	  <script>
 
-     $(document).ready(function() {
-        $('select').selectpicker();
-
-        $(EXAMPLE_BTN).click(function(){
-          
-          $(INPUT_LATEX).html('\\documentclass[12pt]{article}\n\\begin{document}\n\nThis is a latex document that cites one pubmed article using its ID [23340850] and a bunch of others [23340847, 23340848, 23340841]. You can separate IDs with a comma or a semi-colon [23340851;24312911].\n\n\\bibliographystyle{plain}\n\\bibliography{bibtex}\n\n\\end{document}');
-        });
-
-
-        $(RESET_BTN).click(function(){
-          $(OUTPUT_PANEL).hide(100);
-          $(INPUT_PANEL).switchClass( "col-xs-6", "col-xs-12", 300, "easeInOutQuad" );
-          $(INPUT_LATEX).empty();
-          $(INPUT_LATEX).attr('contentEditable', 'true');
-          $(CITE_BTN).text("Cite it!");
-          $(this).hide(100);
-        });
-
-        // executes when HTML-Document is loaded and DOM is ready
-        //$('#test').html(parse(formats.find("FootStyle"), c));
-        $(CITE_BTN).click(function(){
-          console.log("GENERATING CITATIIONS");
-          $(CITE_BTN).prop('disabled', true);
-          $('html').addClass('wait');
-          processTextarea(INPUT_LATEX);
-        });
-
-
-        $('.modal-btn').click(function(){
-          $('#modalTitle').html($(this).attr('title'));
-          $('.modal-section').hide();
-          $('.modal-section#' + $(this).attr('div-target')).show();
-          $('#myModal').modal();
-        });
-
-        
-        
-        $("a.download-btn").attr('href','data:application/octet-stream;base64,')
-        .attr("download", "pubtex_bibtex.txt");
-        $("a.download-btn").click(function(){
-            t = $(this).parents('.form-group').find('.content').text();
-            f = $(this).attr('file-name');
-            $(this)
-        });
-
-     }); 
     /*
     $(window).load(function() {
         $("a.copy").on('click', function (e) {

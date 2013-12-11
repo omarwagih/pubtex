@@ -20,27 +20,54 @@ RESET_BTN = '#reset-button';
 EXAMPLE_BTN = '#example-btn';
 
 MAX_IDS = 300;
-//var p = /\d{8}/g;
-//$('textarea').val().match(p);
-// var re = /\d{8}/g;
 
 
-// str = $('textarea').val();
-// while ((match = re.exec(str)) != null) {
-//     console.log("match found at " + match.index);
-// }
+$(document).ready(function() {
+  $('select').selectpicker();
 
-// String.prototype.insertAt=function(index, string) { 
-//   return this.substr(0, index) + string + this.substr(index);
-// }
+  $(EXAMPLE_BTN).click(function(){
+    
+    $(INPUT_LATEX).html('\\documentclass[12pt]{article}\n\\begin{document}\n\nThis is a latex document that cites one pubmed article using its ID [23340850] and a bunch of others [23340847, 23340848, 23340841]. You can separate IDs with a comma or a semi-colon [23340851;24312911].\n\n\\bibliographystyle{plain}\n\\bibliography{bibtex}\n\n\\end{document}');
+  });
 
 
-// function uniqueAddChar(i){
-//   a = 'abcdefghijklmnopqrstuvwxyz';
-//   m = i % 26;
-//   r = Math.floor(i/26) + 1;
-//   for(var j = 0; j < r; j++) 
-// }
+  $(RESET_BTN).click(function(){
+    $(OUTPUT_PANEL).hide(100);
+    $(INPUT_PANEL).switchClass( "col-xs-6", "col-xs-12", 300, "easeInOutQuad" );
+    $(INPUT_LATEX).empty();
+    $(INPUT_LATEX).attr('contentEditable', 'true');
+    $(CITE_BTN).text("Cite it!");
+    $(this).hide(100);
+  });
+
+  // executes when HTML-Document is loaded and DOM is ready
+  //$('#test').html(parse(formats.find("FootStyle"), c));
+  $(CITE_BTN).click(function(){
+    console.log("GENERATING CITATIIONS");
+    $(CITE_BTN).prop('disabled', true);
+    $('html').addClass('wait');
+    processTextarea(INPUT_LATEX);
+  });
+
+
+  $('.modal-btn').click(function(){
+    $('#modalTitle').html($(this).attr('title'));
+    $('.modal-section').hide();
+    $('.modal-section#' + $(this).attr('div-target')).show();
+    $('#myModal').modal();
+  });
+
+  
+  
+  $("a.download-btn").attr('href','data:application/octet-stream;base64,')
+  .attr("download", "pubtex_bibtex.txt");
+  $("a.download-btn").click(function(){
+      t = $(this).parents('.form-group').find('.content').text();
+      f = $(this).attr('file-name');
+      $(this)
+  });
+
+}); 
 
 function setStatus(m){
   if($('#status').is(":visible")) return;
@@ -53,7 +80,7 @@ function setStatus(m){
 
 function asLatex(s){
   if(s == undefined) return s;
-  var regex = /[^a-zA-Z0-9\-!@%*\)\(+=._-\s]+/g;
+  var regex = /[^a-zA-Z0-9!@%*\)\(+=._\s-]+/g;
   m = s.match(regex);
   if(m == null) return s;
   m =  unique( m.join('').split('') );
