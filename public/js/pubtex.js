@@ -18,6 +18,8 @@ SPINNER = '.spinner';
 CITE_BTN = '#cite-button';
 RESET_BTN = '#reset-button';
 EXAMPLE_BTN = '#example-btn';
+
+MAX_IDS = 300;
 //var p = /\d{8}/g;
 //$('textarea').val().match(p);
 // var re = /\d{8}/g;
@@ -119,6 +121,12 @@ function processTextarea(){
   $(SPINNER).show();
 
   z = unique(z);
+
+  if(z.length > MAX_IDS){
+    console.log("Too many pubmed IDs!");
+    setStatus({error:"Oops! You can't have more than "+ MAX_IDS + " pubmed IDs!"});
+    doneProcessing(-1);
+  }
 
   left = left.replace('\\', '');
   right = right.replace('\\', '');
