@@ -24,7 +24,7 @@ public class Application extends Controller {
 			URL url = new URL("http://www.ncbi.nlm.nih.gov/pubmed/"+pmid+"?report=xml&format=text");
 			
 			// read text returned by server
-		    BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+		    BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
 		    
 		    String line;
 		    String lines = "";
