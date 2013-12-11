@@ -19,7 +19,7 @@ CITE_BTN = '#cite-button';
 RESET_BTN = '#reset-button';
 EXAMPLE_BTN = '#example-btn';
 
-MAX_IDS = 300;
+MAX_IDS = 250;
 
 
 $(document).ready(function() {
