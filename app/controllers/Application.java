@@ -43,8 +43,8 @@ public class Application extends Controller {
 			r = "I/O Error";
 		}
     	
-    	response().setHeader(ETAG, "xxx");
-    	return ok(r.trim()).as("text/plain");
+    	//response().setHeader(ETAG, "xxx");
+    	return ok(r.trim(), "utf-8").as("text/plain");
     }
 
 }
