@@ -1,0 +1,261 @@
+@(message: String)
+
+@main("pub[tex]") {
+	  <script>
+
+     $(document).ready(function() {
+        $('select').selectpicker();
+
+        $(EXAMPLE_BTN).click(function(){
+          
+          $(INPUT_LATEX).html('\\documentclass[12pt]{article}\n\\begin{document}\n\nThis is a latex document that cites one pubmed article using its ID [23340850] and a bunch of others [23340847, 23340848, 23340841]. You can separate IDs with a comma or a semi-colon [23340851;24312911].\n\n\\bibliographystyle{plain}\n\\bibliography{bibtex}\n\n\\end{document}');
+        });
+
+
+        $(RESET_BTN).click(function(){
+          $(OUTPUT_PANEL).hide(100);
+          $(INPUT_PANEL).switchClass( "col-xs-6", "col-xs-12", 300, "easeInOutQuad" );
+          $(INPUT_LATEX).empty();
+          $(INPUT_LATEX).attr('contentEditable', 'true');
+          $(CITE_BTN).text("Cite it!");
+          $(this).hide(100);
+        });
+
+        // executes when HTML-Document is loaded and DOM is ready
+        //$('#test').html(parse(formats.find("FootStyle"), c));
+        $(CITE_BTN).click(function(){
+          console.log("GENERATING CITATIIONS");
+          $(CITE_BTN).prop('disabled', true);
+          $('html').addClass('wait');
+          processTextarea(INPUT_LATEX);
+        });
+
+
+        $('.modal-btn').click(function(){
+          $('#modalTitle').html($(this).attr('title'));
+          $('.modal-section').hide();
+          $('.modal-section#' + $(this).attr('div-target')).show();
+          $('#myModal').modal();
+        });
+
+        
+        
+        $("a.download-btn").attr('href','data:application/octet-stream;base64,')
+        .attr("download", "pubtex_bibtex.txt");
+        $("a.download-btn").click(function(){
+            t = $(this).parents('.form-group').find('.content').text();
+            f = $(this).attr('file-name');
+            $(this)
+        });
+
+     }); 
+    /*
+    $(window).load(function() {
+        $("a.copy").on('click', function (e) {
+          console.log('copy clicked!');
+          e.preventDefault();
+        }).zclip({
+            path: 'http://www.steamdev.com/zclip/js/ZeroClipboard.swf',
+            copy: function () {
+                t = $(this).parents('.form-group').find('.content').text();
+                console.log('copied:' + t);
+                setStatus({success:"Text copied!"});
+                return t; 
+            }, 
+            afterCopy: function(){}
+        });
+      });*/
+  </script>
+  
+  
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="modalTitle">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            <div class="modal-section" id="issues">
+              <p class="lead">If you have a suggestion, or feature request please post it in the <a target="_blank" href="http://github.com/omarwagih/pubtex/issues">github issues section</a>. If you believe your trouble is related to only your machine and not te general audience <a href="mailto:omarwagih@@gmail.com?subject=pubtex issues">contact me</a> and I’ll do my best to help you sort it out</p>
+            </div>
+            <div class="modal-section" id="privacy">
+              Don't worry! pubtex won't share any of your input text. In fact, your data doesn't even leave your computer as all computations are done client side! 
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- End Loading box -->
+
+    <div class="head" style="background:#0e83cd; padding-bottom:10px; margin-bottom: 20px">
+      <div class="container">
+        <div class="row" style="margin-top:10px">
+            <div class="col-sm-12">
+                <center>
+                <h1 style="color: #fff;font-family: 'Raleway', sans-serif;">pub[tex]</h1>
+                <h4 style="color: #fff;font-family: 'Raleway', sans-serif;">From PubMed to BibTeX in no time.</h4>
+                <menu class="bracket-effect hide">
+                  <a page="main" href="#">Get started</a>
+                  <a page="about" href="#">About</a>
+                  <a page="contact" href="#">Contribute</a>
+                </menu>
+                <p style="color:#fff; display:none">SOCIAL HERE</p>
+                
+                <div style="margin-bottom:15px; margin-top:15px">
+                  <!-- AddThis Button BEGIN -->
+                  <div class="addthis_toolbox addthis_default_style">
+                  <center>
+                    <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+                    <a class="addthis_button_tweet" tw:text="Check out pub[tex]! http://omarwagih.github.io/pubtex"></a>
+                    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+                  </center>
+                  </div>
+                  <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+                  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-528ff61a4f9b9c46"></script>
+                  <!-- AddThis Button END -->
+                </center>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="spinner" style="display:none"></div>
+          <center> 
+	          <p id="status" class="lead" style="display:none">
+				      <span class="status text-success" id="success">this is a success summer</span>
+	          	<span class="status text-danger" id="error">This is an error</span>
+	          	<span class="status" id="neutral">This is an information message</span>  
+			       </p>
+          </center>
+        </div>
+      </div>
+
+      <div class="row">
+
+      <!-- Left panel -->
+      	<div class="col-xs-12" id="input-panel">
+
+          <!-- Input text -->
+          <div class="form-group">
+            <label for="input-latex">Input LaTeX · <a id="example-btn">Example</a></label>
+          	<div class="form-control editor">
+              <div class="content" contentEditable="true" id="input-latex"></div>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+             <label for="journal-style">Journal name style</label>
+             <select id="journal-style" class="form-control" >
+              <option value="abbr">Abbreviated: Nat Biotechnol</option>
+              <option value="long">Long: Nature Biotechnology</option>
+             </select>
+          </div>
+
+          <!-- Bracket style -->
+          <div class="form-group" style="margin-top:-10px">
+             <label for="bracket-style">Bracket style</label>
+             <select id="bracket-style" class="form-control">
+              <option left="\[" right="\]">Single square brackets: [Pubmed IDs]</option>
+              <option left="\[\[" right="\]\]">Double square brackets: [[Pubmed IDs]]</option>
+              <option left="\(\(" right="\)\)">Double round brackets: ((Pubmed IDs))</option>
+              <option left="\(" right="\)">Single round brackets: (Pubmed IDs)</option>
+             </select>
+          </div>
+
+          <div class="form-group" style="margin-top:-10px">
+             <label for="key-style">Key representation</label>
+             <select id="key-style" class="form-control">
+              <option value="authoryear">AuthorYear: Crick2003</option>
+              <option value="pmid">Pubmed ID: pmid12345678</option>
+             </select>
+          </div>
+
+
+
+          <div class="form-group hide">
+            <label>Inline text</label>
+            <br>
+            <div class="input-group">
+            <span class="input-group-addon">\</span>
+            <input type="text" class="form-control" value="cite">
+            <span class="input-group-addon">{Pubmed ID}</span>
+          </div>
+          </div>
+
+          <div class="form-group hide">
+            <label>Use abbrevaited journal names</label>
+            <br>
+            <input type="checkbox" value=""/>
+          </div>
+          
+          <!-- Buttons -->
+          <button id="cite-button" class="btn btn-lg btn-default">Cite it!</button> 
+          <button id="reset-button" class="btn btn-lg btn-default" style="display:none">Start over</button> 
+          <br><br>
+
+
+      	</div> <!-- End left panel -->
+
+        <!-- Right panel (results) -->
+        <div class="col-xs-6" id="output-panel" style="display:none">
+
+            <!-- RESULTS-->
+            <div id="output">
+
+
+            <!-- Output text · <a class="copy">Copy to clipboard</a>-->
+            <div class="form-group">
+              <label>Output LaTeX · <a href="#" id="download-latex" download='latex.tex'>Download</a></label>
+              <div class="form-control editor">
+	              <div class="content" contentEditable="false" id="output-latex">outlatex</div>
+        	  </div>
+            </div>
+
+            <div class="form-group">
+              <label>BibTeX · <a href="#" id="download-bibtex" download='bibtex.bib'>Download</a></label>
+              <div class="form-control editor">
+	              <div class="content" contentEditable="false" id="output-bibtex" style="white-space:pre;overflow-x:hidden;">outbibtex</div>
+        	  </div>
+            </div>
+
+            <div class="form-group" id="error-text" style="display:none">
+                <label>Errors</label>
+                <div class="content" contentEditable="false"></div>
+                
+            </div>
+
+            <!-- END RESULTS-->
+            </div>
+
+      </div>
+
+      </div><!--ROW END-->
+
+      <div class="footer">
+        <div class="social"> </div>
+
+
+        <p>Designed and built by <a href="http://twitter.com/omarwagih" target="_blank">@@omarwagih</a>.
+        </p>
+        
+        <ul class="hlist">
+          <li>Version 1.0.0 beta</li>
+          <li class="muted">·</li>
+          <li><a class="modal-btn" div-target="issues" title="Issues">Issues</a></li>
+          <li class="muted">·</li>
+          <li><a class="modal-btn" div-target="privacy" title="Privacy">Privacy</a></li>
+        </ul>
+      </div>
+
+    </div> <!-- /container -->
+}
