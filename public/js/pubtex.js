@@ -145,8 +145,6 @@ function processTextarea(){
     return;
   }
 
-  $(SPINNER).show();
-
   z = unique(z);
 
   if(z.length > MAX_IDS){
@@ -155,6 +153,8 @@ function processTextarea(){
     doneProcessing(-1);
     return;
   }
+
+  $(SPINNER).show();
 
   left = left.replace('\\', '');
   right = right.replace('\\', '');
