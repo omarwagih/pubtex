@@ -155,7 +155,7 @@ function processTextarea(){
   fetchData(pmids);
 }
 
-window.arg = null;
+window.arg = [];
 function fetchData(pmids) {
     var requests = [];
     for (var i = 0; i < pmids.length; i++) {
@@ -169,13 +169,13 @@ function fetchData(pmids) {
     $.when.apply($, requests).then(function () {
         var array = $.map(requests, function (arg) {
             window.arg = arg;
-            html = arg.responseText;
-            xml = html.replace(/&amp;/g, '&')
-                      .replace(/&gt;/g, '>')
-                      .replace(/&lt;/g, '<')
-                      .replace(/&quot;/g, '"')
-                      .replace(/&apos;/g, "'")
-                      .replace(/<\/?pre>/g, "").trim();
+            xml = $("<div/>").html(arg.responseText).text();
+            // xml = html.replace(/&amp;/g, '&')
+            //           .replace(/&gt;/g, '>')
+            //           .replace(/&lt;/g, '<')
+            //           .replace(/&quot;/g, '"')
+            //           .replace(/&apos;/g, "'")
+            //           .replace(/<\/?pre>/g, "").trim();
             return new PubmedEntry(xml);
         });
         fetchDataCallback(array, pmids);

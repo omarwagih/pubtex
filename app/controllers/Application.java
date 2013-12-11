@@ -44,7 +44,7 @@ public class Application extends Controller {
 		}
     	
     	response().setHeader(ETAG, "xxx");
-    	return ok(result.render(r));
+    	return ok(r.trim()).as("text/plain");
     }
 
 }
