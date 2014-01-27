@@ -1,26 +1,6 @@
 @(message: String)
 
 @main("pub[tex]") {
-	  <script>
-
-    /*
-    $(window).load(function() {
-        $("a.copy").on('click', function (e) {
-          console.log('copy clicked!');
-          e.preventDefault();
-        }).zclip({
-            path: 'http://www.steamdev.com/zclip/js/ZeroClipboard.swf',
-            copy: function () {
-                t = $(this).parents('.form-group').find('.content').text();
-                console.log('copied:' + t);
-                setStatus({success:"Text copied!"});
-                return t; 
-            }, 
-            afterCopy: function(){}
-        });
-      });*/
-  </script>
-  
   
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -58,8 +38,6 @@
                   <a page="about" href="#">About</a>
                   <a page="contact" href="#">Contribute</a>
                 </menu>
-                <p style="color:#fff; display:none">SOCIAL HERE</p>
-                
                 <div style="margin-bottom:15px; margin-top:15px">
                   <!-- AddThis Button BEGIN -->
                   <div class="addthis_toolbox addthis_default_style">
@@ -85,9 +63,9 @@
           <div class="spinner" style="display:none"></div>
           <center> 
 	          <p id="status" class="lead" style="display:none">
-				      <span class="status text-success" id="success">this is a success summer</span>
-	          	<span class="status text-danger" id="error">This is an error</span>
-	          	<span class="status" id="neutral">This is an information message</span>  
+				      <span class="status text-success" id="success"></span>
+	          	<span class="status text-danger" id="error"></span>
+	          	<span class="status" id="neutral"></span>  
 			       </p>
           </center>
         </div>
@@ -119,7 +97,7 @@
           <div class="form-group" style="margin-top:-10px">
              <label for="bracket-style">Bracket style</label>
              <select id="bracket-style" class="form-control">
-              <option left="\[" right="\]">Single square brackets: [Pubmed IDs]</option>
+              <option left="/\[" right="\]">Single square brackets: [Pubmed IDs]</option>
               <option left="\[\[" right="\]\]">Double square brackets: [[Pubmed IDs]]</option>
               <option left="\(\(" right="\)\)">Double round brackets: ((Pubmed IDs))</option>
               <option left="\(" right="\)">Single round brackets: (Pubmed IDs)</option>

@@ -123,10 +123,12 @@ function processTextarea(){
   left =  bs.attr('left');
   right = bs.attr('right');
   //var re = new RegExp("\\[(\\d{8})([,|;]\\s*\\d{8})*\\]", "g");
-  var re = new RegExp(left + "(\\d{4,8})([,|;]\\s*\\d{4,8})*" + right, "g");
+  var re = new RegExp(left + "(\\d{3,10})([,|;]\\s*\\d{3,10})*" + right, "g");
+  re.lastIndex = 0;
+  // Get html, replace &nbsp; and REMOVE INVISIBLE CHARACTERS (WTF?)
+  var c = $(id).text().trim().replace(/[^\u0000-\u007E]/g, "");
 
-  // Get html, replace &nbsp;
-  var c = $(id).text();
+  //c = c.replace(/(\r\n|\n|\r)/gm,"");
   if(c.length == 0){
     console.log("No citations found!");
     setStatus({error:"Doh! You cant have no text! Try hitting example and try again!"});
