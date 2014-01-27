@@ -39,6 +39,7 @@ $(document).ready(function() {
   	}, 0.1);
   });
 
+
   $(RESET_BTN).click(function(){
     $(OUTPUT_PANEL).hide(100);
     $(INPUT_PANEL).switchClass( "col-xs-6", "col-xs-12", 300, "easeInOutQuad" );
