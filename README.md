@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/omarwagih/pubtex/master/public/images/pubtex-logo.png" alt="Logo"/>
+<img src="https://raw.githubusercontent.com/omarwagih/pubtex/master/public/images/pubtex-logo-lg.png" alt="Logo"/>
 
 ## What is pubtex?
 pubtex is a tool that allows you to convert pubmed IDs in your latex document to bibtex entries. It's primarily based on javascript with almost no server side processing. 
